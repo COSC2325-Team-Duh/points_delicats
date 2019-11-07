@@ -6,3 +6,4 @@ def formatInput(text):
     :param text: string of text
     :return text: string of text
     """
+    pass
