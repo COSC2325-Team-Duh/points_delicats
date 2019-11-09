@@ -46,3 +46,10 @@ if __name__ == "__main__":
     buildAssembly()
 else:
     pass
+
+def cleanUp():
+    logging.debug("Cleaning up the binaries and objects")
+    if checkAssembly(BINARY):
+        os.popen("make clean").read()
+    else:
+        logging.debug("No Binary found. nothing to do")
