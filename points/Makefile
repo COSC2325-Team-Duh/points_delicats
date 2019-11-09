@@ -1,7 +1,7 @@
 PROJPATH 	= $(PWD)
 PROJNAME 	= $(notdir $(PROJPATH))
 
-TARGET 		= $(PROJNAME)
+TARGET 		= $(PROJNAME).bin
 ASM 		:= aarch64-linux-gnu-as
 GPP			:= aarch64-linux-gnu-g++
 LINK		:= aarch64-linux-gnu-g++
