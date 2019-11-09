@@ -15,7 +15,7 @@ def buildAssembly():
     This function will run a make command and verify that a binary file
     was created as a result of the make command.
 
-    :return bool: Return True if built, False if failure
+    :return bool: Return True if built,
     """
     os.chdir(ABSPATH)
     if checkAssembly(BINARY):
@@ -48,8 +48,20 @@ else:
     pass
 
 def cleanUp():
-    logging.debug("Cleaning up the binaries and objects")
+    """
+    Cleans up binaries and objects inside of the library.
+    This is mostly used for quick development of the asm
+    file, as well as the C++ file that will be used to
+    generate the display. Should not be used in the final
+    code.
+
+    :params none:
+    :return bool: True if successful
+    """
     if checkAssembly(BINARY):
+        logging.debug("Cleaning up the binaries and objects")
         os.popen("make clean").read()
+        cleanUp()
     else:
         logging.debug("No Binary found. nothing to do")
+    return True
