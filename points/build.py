@@ -1,7 +1,14 @@
 import os
 import logging
-BINARY = "./points.bin"
-logging.basicConfig(level=logging.DEBUG)
+
+BINARY = "points.bin"
+PATH = os.popen('pwd').read().strip()
+LIB = '/points/'
+
+ABSPATH = PATH + LIB
+
+class NoBinaryException(Exception):
+    pass
 
 def buildAssembly():
     """
@@ -10,6 +17,7 @@ def buildAssembly():
 
     :return bool: Return True if built, False if failure
     """
+    os.chdir(ABSPATH)
     if checkAssembly(BINARY):
         logging.debug("Binary exists, buildAssembly() has nothing to do...")
         return True
@@ -21,9 +29,7 @@ def buildAssembly():
             logging.debug("Binary Built")
             return True
         else:
-            logging.debug("Something went wrong... :(")
-            return False
-
+            raise NoBinaryException("Make routine failed")
 
 
 def checkAssembly(file):
