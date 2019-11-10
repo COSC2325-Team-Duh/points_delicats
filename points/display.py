@@ -4,9 +4,46 @@ def sixToBraille(word):
     for sendDisplay()
 
     :param word: 6 character string
-    :return list: a multidimensional list of bytes
+    :return rowData: a multidimensional list of bytes
     """
-    pass
+    bool test = false # turn this to true to run a test case
+    rowData = [[],[],[],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[],[],[]] # indecies 3 and 4 are always empty, thus initialized to zeros
+    charList= [] # holds the actual braille-ized characters
+
+    
+    if len(word) < 6: # This bit pads the word in case it's smaller than six characters
+        while len(word) <6:
+            word = word + ' '
+
+
+    for x in range(6):
+        charList.append( letters[word[x]] ) # charList now holds a binary list for each character
+
+        
+    for x in range(3): #write first three characters
+        for y in range(3):
+            for bit in charList[y][x]:
+                rowData[x].append(bit)
+            if y < 2:
+                rowData[x].append(0) #line breaks between characters
+
+    # middle blank lines already written #
+
+    for x in range(3): #write last three characters
+        for y in range(3):
+            for bit in charList[y+3][x]:
+                rowData[x+5].append(bit)
+            if y < 2:
+                rowData[x+5].append(0) #line breaks between characters    
+    
+    if test:  # just a test statement for debugging. Won't execute if the test bool is false, which it is.    
+        for item in rowData:    
+            print(item)
+            
+    return rowData
+
+# END OF sixToBraille #
+
 
 def sendDisplay(rows):
     """
