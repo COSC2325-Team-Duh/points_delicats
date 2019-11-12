@@ -1,11 +1,11 @@
 # This file holds the dictionary of letters for braille.
 
-"THIS COMMENTED CODE PRINTS BLANK DICTIONARY ENTRIES BECAUSE NOBODY WANTS TO TYPE ALL THAT OUT"
-##characters = list("abcdefghijklmnopqrstuvwxyz ?")
-###print (characters)
-##
-##for ch in characters:
-##    print( "'" + ch + "'" +":" + "[\t[0,0],\n\t[0,0],\n\t[0,0]],\n")
+# "THIS COMMENTED CODE PRINTS BLANK DICTIONARY ENTRIES BECAUSE NOBODY WANTS TO TYPE ALL THAT OUT"
+# characters = list("abcdefghijklmnopqrstuvwxyz ?")
+# print (characters)
+#
+# for ch in characters:
+#    print( "'" + ch + "'" +":" + "[\t[0,0],\n\t[0,0],\n\t[0,0]],\n")
 
 letters = {
         'a':[	[1,0],
@@ -119,10 +119,10 @@ letters = {
         '?':[	[0,0],
                 [1,0],
                 [1,1]],
-        
+
         'chBk':[ # "Character Break." This is not a space character. It is the empty column of space between characters on the LED display.
                 [0],
                 [0],
                 [0]]
-        
+
     }
