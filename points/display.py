@@ -42,6 +42,15 @@ def sixToBraille(word):
 
 # END OF sixToBraille #
 
+def sixer(phrase):
+    """
+    Takes the phrase and chops it into a list of 6 character strings
+    to be used by sixToBraille()
+
+    :param phrase: arbitrarily long string
+    :return list: list of 6 character strings
+    """
+    pass
 
 def sendDisplay(rows):
     """
