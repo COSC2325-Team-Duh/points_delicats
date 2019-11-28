@@ -11,9 +11,17 @@ def setup():
         raise
 
 def main():
-    sleep(10)
-    logging.debug("CleaningUp")
-    p.cleanUp()
+    phrase = input("Phrase: ")
+    logging.info("Enter a phrase! -1 will exit the program")
+    while phrase != "-1":
+        phrase = p.formatInput(phrase[0:6])
+        logging.debug("The phrase is: {}".format(phrase))
+        matrix = p.sixToBraille(phrase)
+        for row in matrix:
+            print('\t', row)
+        phrase = input("Phrase: ")
+    logging.info("Goodbye!")
+    return 0
 
 if __name__ == "__main__":
     try:

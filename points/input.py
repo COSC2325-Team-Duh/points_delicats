@@ -1,4 +1,4 @@
-def formatInput(text):
+def formatInput(inputString):
     """
     Takes a string input, removes all numbers and special characters and converts
     all letters to lower case.
@@ -6,12 +6,7 @@ def formatInput(text):
     :param text: string of text
     :return text: string of text
     """
-    pass
-
-    inputString = input("Input a string: ")
-
     newString = ""
-
     for index in inputString:
             if index == " ":
                 newString += index
@@ -20,6 +15,4 @@ def formatInput(text):
             elif index >= "A" and index <= "Z":
                 newString += index.lower()
 
-    print(newString)
-
-
+    return newString

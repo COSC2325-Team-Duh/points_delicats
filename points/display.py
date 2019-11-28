@@ -1,5 +1,5 @@
 import logging
-from letters import letters
+from .letters import letters
 
 def sixToBraille(word):
     """
