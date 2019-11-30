@@ -50,7 +50,24 @@ def sixer(phrase):
     :param phrase: arbitrarily long string
     :return list: list of 6 character strings
     """
+    output = [] # Output list of strings
+    
+    parts = len(phrase)/6 # Number of parts in the output list. Used for loops
+    if (parts % 6  != 0 ): # If the number of characters in phrase doesn't divide by 6, add an extra index for those bits on the end
+        parts = int(parts) + 1   
+
+    for space in range(len(phrase)%6): #Adds spaces to the phrase to fill empty cells
+        phrase = phrase + ' '
+
+    for index in range(parts): # Carves up the original string, adds each item to the output list
+        toAdd = phrase[(6*index):((6*index)+6)]
+        if (toAdd): # This if statement solves a bug where an empty string is tagged onto the end if the output list if the phrase is exactly divisible by 6
+            output.append(toAdd)
+
+    return output
     pass
+
+# END OF sixer #
 
 def sendDisplay(rows):
     """
