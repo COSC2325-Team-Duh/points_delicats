@@ -14,5 +14,7 @@ def formatInput(inputString):
                 newString += index
             elif index >= "A" and index <= "Z":
                 newString += index.lower()
+            else:
+                newString += '?'
 
     return newString
