@@ -4,12 +4,11 @@
 static PyObject *method_set_pin_mode(PyObject *self, PyObject *args) {
     int *pin, *mode;
     extern void gpioSelect(int*, int*);
-    printf("Made it this far!\n");
+
     if (!PyArg_ParseTuple(args, "ii", &pin, &mode)) {
 
         return Py_None;
     }
-    printf("Pin: %p\nMide: %p\n", pin, mode);
     gpioSelect(pin, mode);
 
     return Py_None;

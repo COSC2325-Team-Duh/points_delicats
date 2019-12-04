@@ -2,11 +2,13 @@
     .cpu    cortex-a53
     .fpu    neon-fp-armv8
     .syntax unified
-    
+
+// Constants
     .equ    PAGE_SIZE, 4096 // Size of the page file
     .equ    STACK_ARGS, 8   //stack 8-byte aligned
 
 .global unmapMem
+.type unmapMem, %function
 unmapMem:
     sub sp, sp, #16
     str r4, [sp, #0]

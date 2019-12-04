@@ -16,7 +16,6 @@
     .equ    GPSET0, 0x28            // set register offset
 
 .text
-.align 2
 .global gpioClr
 .type gpioClr, %function
 
