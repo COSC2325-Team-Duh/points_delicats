@@ -36,10 +36,6 @@
 .align 2
 device:
     .asciz  "/dev/gpiomem"
-fdMsg:
-    .asciz  "File descriptor = %i\n"
-memMsg:
-    .asciz  "Using memory at %p\n"
 
 // main program
 .text
@@ -62,11 +58,6 @@ mapMem:             // RETURN GPIO ADDRESS as r0
     bl  open
     mov r4, r0
 
-// Display File descriptor
-    ldr r0, fdMsgAddr
-    mov r1, r4
-    bl printf
-
 // map the GPIO
     str r4, [sp, FILE_DESCRP_ARG]
     ldr r0, gpio                // address of GPIO
@@ -77,14 +68,6 @@ mapMem:             // RETURN GPIO ADDRESS as r0
     mov r3, MAP_SHARED          // share with other processes
     bl  mmap
     mov r5, r0                  // save virtual mem address
-
-// Display the address
-    mov r1, r5
-    ldr r0, memMsgAddr
-    bl  printf
-
-
-@ END OF MEMORY MAPPIN, DAWG
 
 // restore stack
     mov r0, r5
