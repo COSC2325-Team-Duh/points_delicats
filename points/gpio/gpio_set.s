@@ -2,8 +2,7 @@
 // Sets a gpio pin. Assumes that GPIO registers have been mapped to programming
 // memory
 // Calling scheme:
-//      mov r0, GPIO_ADDRESS
-//      mov r1, PIN_NUMBER
+//      r0, PIN_NUMBER
 //      bl gpioSet
 
 // Define Raspi
