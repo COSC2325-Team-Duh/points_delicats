@@ -7,21 +7,15 @@ static PyObject *method_pin_write(PyObject *self, PyObject *args) {
     extern void gpioClr(int*);
 
     if (!PyArg_ParseTuple(args, "ii", &pin, &value)) {
-
         return Py_False;
-   }
-
-    printf("Pin: %p\nValue: %d\n", pin, value);
+    }
     if (value == 1) {
         gpioSet(pin);
-
     }
     else if (value == 0) {
-        printf("Clearing pin!\n");
         gpioClr(pin);
     }
 
-    printf("Made it this far\n");
     return Py_None;
 }
 

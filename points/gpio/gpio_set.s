@@ -33,6 +33,7 @@ gpioSet:
     mov     r5, r0
 
     bl      mapMem
+    mov     r6, r0
     add     r4, r0, GPSET0          // pointer to GPSET regs
 
 // compute addres of GPSET register and pin field

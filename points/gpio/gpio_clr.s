@@ -30,10 +30,10 @@ gpioClr:
     str     lr, [sp, #16]
     add     fp, sp, #16
 
-    mov     r5, r1
+    mov     r5, r0
 
     bl      mapMem
-    mov     r0, r6
+    mov     r6, r0
     add     r4, r0, GPSET0          // pointer to GPSET regs
 
 // compute addres of GPSET register and pin field
@@ -51,7 +51,7 @@ gpioClr:
     orr     r2, r2, r3
     str     r2, [r0]
 
-    mov     r6, r0
+    mov     r0, r6
     bl      unmapMem
 
     mov     r0, #0
