@@ -2,17 +2,17 @@ PROJPATH 	= $(PWD)
 PROJNAME 	= $(notdir $(PROJPATH))
 
 TARGET 		= $(PROJNAME).bin
-ASM 		:= aarch64-linux-gnu-as
-GPP			:= aarch64-linux-gnu-g++
-LINK		:= aarch64-linux-gnu-g++
+ASM 		:= as
+GPP			:= gcc
+LINK		:= gcc
 
 FLAGS 		:= -static
 
-ASMSRCS 	:= $(wildcard ./*.s)
+ASMSRCS 	:= $(wildcard ./gpio/*.s)
 CPPSRCS		:= $(wildcard ./*.cpp)
 ASMOBJS		:= $(ASMSRCS:.s=.o)
-CPPOBJS		:= $(CPPSRCS:.cpp=.o)
 OBJS 		:= $(ASMOBJS) $(CPPOBJS)
+OBJDIR		:= gpio_objects
 
 .DEFAULT_GOAL := all
 
@@ -22,11 +22,8 @@ all: $(TARGET)
 %.o: %.s
 	$(ASM) -o $@ $<
 
-%.o: %.cpp
-	$(GPP) -c -o $@ $<
-
 $(TARGET): $(OBJS)
-	$(LINK) $(FLAGS) -o $@ $^
+	mv $(OBJS) $(OBJDIR)
 
 .PHONY: run
 run: $(TARGET)

@@ -33,10 +33,11 @@ gpioSelect:
     str     lr, [sp, #20]
     add     fp, sp, #20
 
-    mov     r4, r0              // store GPIO addr in r4
-    mov     r5, r1              // store pin number in r5
-    mov     r6, r2              // store pin function in r2
+    mov     r5, r0              // store pin number in r5
+    mov     r6, r1              // store pin function in r2
 
+    bl      mapMem
+    mov     r4, r0
     mov     r1, r4
     mov     r2, r5
     mov     r3, r6
@@ -64,7 +65,10 @@ gpioSelect:
     lsl     r6, r6, r1
     orr     r2, r2, r6
     str     r2, [r0, #0]
-    
+
+    mov     r4, r0
+    bl      unmapMem
+
     mov     r0, #0
     ldr     r4, [sp, #4]
     ldr     r5, [sp, #8]

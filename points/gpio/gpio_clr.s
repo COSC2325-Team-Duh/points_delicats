@@ -22,15 +22,19 @@
 .type gpioClr, %function
 
 gpioClr:
-    sub     sp, sp, #16
+    sub     sp, sp, #20
     str     r4, [sp, #0]
     str     r5, [sp, #4]
-    str     fp, [sp, #8]
-    str     lr, [sp, #12]
-    add     fp, sp, #12
+    str     r6, [sp, #8]
+    str     fp, [sp, #12]
+    str     lr, [sp, #16]
+    add     fp, sp, #16
 
-    add     r4, r0, GPSET0          // pointer to GPSET regs
     mov     r5, r1
+
+    bl      mapMem
+    mov     r0, r6
+    add     r4, r0, GPSET0          // pointer to GPSET regs
 
 // compute addres of GPSET register and pin field
     mov     r3, PINS_IN_REG
@@ -47,11 +51,15 @@ gpioClr:
     orr     r2, r2, r3
     str     r2, [r0]
 
+    mov     r6, r0
+    bl      unmapMem
+
     mov     r0, #0
     ldr     r4, [sp, #0]
     ldr     r5, [sp, #4]
-    ldr     fp, [sp, #8]
-    ldr     lr, [sp, #12]
+    ldr     r6, [sp, #8]
+    ldr     fp, [sp, #12]
+    ldr     lr, [sp, #16]
 
-    add     sp, sp, #16
+    add     sp, sp, #20
     bx      lr

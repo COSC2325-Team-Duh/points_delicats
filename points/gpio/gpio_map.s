@@ -95,11 +95,11 @@ mapMem:             // RETURN GPIO ADDRESS as r0
     ldr lr, [sp, #12]
     add sp, sp, #16
     bx lr
-    
+
 .align 2
 fdMsgAddr:  .word   fdMsg
 deviceAddr: .word   device
 openMode:   .word   O_FLAGS
 memMsgAddr: .word   memMsg
 gpio:       .word   PERIPH+GPIO_OFFSET
-delayMS:    .int 1000
+delayMS:    .int    1000
