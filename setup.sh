@@ -15,6 +15,9 @@ cd $PWD/points
 python setup.py install
 cd $PROJ_DIR
 
+echo ""
+echo ""
+echo "***********************👇 NOTE 👇****************************"
 echo "Before running main.py, be sure to run the following command:"
 echo ""
 echo "source .env/bin/activate"
