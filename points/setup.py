@@ -6,7 +6,6 @@ class InstallPyCommand(install):
 
     def run(self):
         mkdir = os.popen('mkdir gpio_objects').read()
-        print(mkdir)
         make = os.popen('make').read()
         print(make)
         install.run(self)
