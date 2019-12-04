@@ -2,9 +2,8 @@
 // Selects a function for a GPIO pin. Address of GPIO pins in memory must
 // already be mapped before running this function.
 // Calling scheme:
-//      ldr r0, GPIO_MEM_ADDR
-//      ldr r1, PIN NUMBER
-//      ldr r2, PIN FUNCTION
+//      r0, PIN_NUMBER
+//      r1, PIN_FUNCTION
 //      bl gpioSelect
 //
 // Code adapted from: https://bob.cs.sonoma.edu/IntroCompOrg-RPi/sec-gpio-pins
@@ -38,11 +37,6 @@ gpioSelect:
 
     bl      mapMem
     mov     r4, r0
-    mov     r1, r4
-    mov     r2, r5
-    mov     r3, r6
-    ldr     r0, =regs
-    bl      printf
 
 // Compute GPFSEL register address
     mov     r3, #10             // divisor 10 registers in each GPFSEL
@@ -77,10 +71,4 @@ gpioSelect:
     ldr     lr, [sp, #20]
     add     sp, sp, #24
     bx      lr
-
-.data
-test:
-    .asciz "R0 = %p\n"
-regs:
-    .asciz "R0, R1, R2 = %x, 0x%x, 0x%x\n"
 
