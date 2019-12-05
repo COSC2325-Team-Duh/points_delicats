@@ -4,17 +4,17 @@
 uint32_t *gpio_memory;
 
 static PyObject *method_pin_write(PyObject *self, PyObject *args) {
-    int pin, value;
+    uint32_t pin, value;
     extern void gpioSet(uint32_t*, int);
     extern void gpioClr(uint32_t*, int);
-    if (!PyArg_ParseTuple(args, "ii", &pin, &value)) {
+    if (!PyArg_ParseTuple(args, "ip", &pin, &value)) {
         Py_INCREF(Py_None);
         return Py_None;
     }
-    if (value == 1) {
+    if (value) {
         gpioSet(gpio_memory, pin);
     }
-    else if (value == 0) {
+    else {
         gpioClr(gpio_memory, pin);
     }
     Py_INCREF(Py_None);

@@ -2,7 +2,8 @@
 // Sets a gpio pin. Assumes that GPIO registers have been mapped to programming
 // memory
 // Calling scheme:
-//      r0, PIN_NUMBER
+//      r0, GPIO_ADDR
+//      r1, PIN_NUMBER
 //      bl gpioSet
 
 // Define Raspi
@@ -45,7 +46,7 @@ gpioSet:
 
     ldr     r2, [r0]                // r2 = *GPSET1
     mov     r3, PIN                 // r3 = 1
-    lsl     r3, r3, r1              // r3 = r3 << r1 = 0x00020000
+    lsl     r3, r3, r1              // r3 = r3 << r1 = 0x00000002
     orr     r2, r2, r3              // r2 = r2 | r3 (write the pin)
     str     r2, [r0]                // GPSET1 = r2
 

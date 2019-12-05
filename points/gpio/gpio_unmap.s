@@ -30,7 +30,7 @@ unmapMem:
     //mov r0, r5                  // memory to unmap
     mov r1, PAGE_SIZE           // amount we mapped
     bl  munmap
-    mov r0,#3
+    mov r0, #3
     bl close
 
     //mov r0, r5
