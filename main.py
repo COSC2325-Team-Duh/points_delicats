@@ -1,22 +1,18 @@
 # set up logging library
 import logging
 logging.basicConfig(format='%(asctime)s .:%(levelname)s %(message)s', level=logging.DEBUG)
-import RPi.GPIO as GPIO
 
 import points as p
 from time import sleep
-latch_pin = 27
 
-dPin = 11
-lPin = 13
-cPin = 15
+TIME = 1000
 
 def setup():
-    p.set_pin_mode(latch_pin, 1)
+    p.setup_pins()
+    p.set_pin_mode(p.latch_pin, 1)
     p.set_pin_mode(p.clock_pin, 1)
     p.set_pin_mode(p.data_pin, 1)
 
-    GPIO.setmode(GPIO.BOARD)    # Number GPIOs by its physical location
 def sendDisplay(row):
     for i in range(8):
         GPIO.output(cPin, GPIO.LOW)
@@ -33,22 +29,11 @@ def main():
         for row in matrix:
             print('\t', row)
         matrix.reverse()
-        for i in range(500):
-            column = 0x80
-            for j in range(8):
-                row = matrix[j]
-                brow = 0b0
-                for bit in row:
-                    brow = brow << 1
-                    brow = brow | int(bit)
 
-                p.pin_write(latch_pin, 0)
-                p.sendDisplay(brow)
-                p.sendDisplay(~column)
-                p.pin_write(latch_pin, 1)
-                column>>=1
-                sleep(0.001)
-
+        for i in range(TIME):
+            p.sendDisplay(matrix)
+            sleep(0.001)
+        p.clearDisplay()
 
 #        row = ''
 #        for item in matrix[j]:

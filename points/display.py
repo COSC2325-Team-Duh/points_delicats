@@ -3,13 +3,16 @@ from .letters import letters
 from pin_write import pin_write
 from set_pin_mode import set_pin_mode
 import RPi.GPIO as GPIO
+from time import sleep
 
-GPIO.setmode(GPIO.BOARD)    # Number GPIOs by its physical location
+GPIO.setmode(GPIO.BCM)    # Number GPIOs by its physical location
+latch_pin = 27
 clock_pin = 22
 data_pin  = 17
 
-dPin = 11
-GPIO.setup(dPin, GPIO.OUT)
+GPIO.setup(data_pin, GPIO.OUT)
+
+
 def sixToBraille(word):
     """
     Takes a word (6 characters max) and converts it to the output array
@@ -77,22 +80,39 @@ def sixer(phrase):
     pass
 
 # END OF sixer #
-
-def sendDisplay(row):
+def sendDisplay(matrix):
     """
     Sends the rows to the binary file to be displayed on the 8x8 matrix.
 
     :param row: multimensional list of bytes
     :return none:
     """
-    for i in range(8):
+    column = 0x80
+    for row in matrix:
+        brow = 0b0
+        for bit in row:
+            brow = brow << 1
+            brow = brow | int(bit)
+        pin_write(latch_pin, 0)
+        shiftDisplay(brow)
+        shiftDisplay(~column)
+        pin_write(latch_pin, 1)
+        column>>=1
+
+
+def shiftDisplay(row):
+    for j in range(8):
         pin_write(clock_pin, 0)
-        val = 0
-        if 0x01 & (row>>i) == 0x01:
-            #pin_write(data_pin, 1)
-            GPIO.output(dPin, 1)
+        if 0x01 & (row>>j) == 0x01:
+            pin_write(data_pin, 1)
+            #GPIO.output(data_pin, 1)
         else:
-            #pin_write(data_pin, 0)
-            GPIO.output(dPin, 0)
+            pin_write(data_pin, 0)
+            #GPIO.output(data_pin, 0)
+        sleep(1e-5)
         pin_write(clock_pin, 1)
 
+
+def clearDisplay():
+    matrix = sixToBraille('')
+    sendDisplay(matrix)
