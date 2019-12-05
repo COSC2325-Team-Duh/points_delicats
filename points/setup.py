@@ -16,12 +16,9 @@ def main():
             cmdclass={
                     'install': InstallPyCommand,
                 },
-            ext_modules=[Extension("set_pin_mode", ["set_pin_mode.c"],
-                            extra_objects=["./gpio_objects/gpio_map.o",
-                                           "./gpio_objects/gpio_sel.o",
-                                           "./gpio_objects/gpio_unmap.o"]),
-                         Extension("pin_write", ["pin_write.c"],
+            ext_modules=[Extension("pin_write", ["pin_write.c"],
                              extra_objects=["./gpio_objects/gpio_map.o",
+                                            "./gpio_objects/gpio_sel.o",
                                             "./gpio_objects/gpio_set.o",
                                             "./gpio_objects/gpio_clr.o",
                                             "./gpio_objects/gpio_unmap.o"])

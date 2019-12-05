@@ -23,13 +23,13 @@ static PyObject *method_pin_write(PyObject *self, PyObject *args) {
 
 static PyObject *method_set_pin_mode(PyObject *self, PyObject *args) {
     int *pin, *mode;
-    extern void gpioSelect(int*, int*);
+    extern void gpioSelect(uint32_t*, int*, int*);
 
     if (!PyArg_ParseTuple(args, "ii", &pin, &mode)) {
         Py_INCREF(Py_None);
         return Py_None;
     }
-    gpioSelect(pin, mode);
+    gpioSelect(gpio_memory, pin, mode);
 
     Py_INCREF(Py_None);
     return Py_None;

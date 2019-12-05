@@ -32,11 +32,9 @@ gpioSelect:
     str     lr, [sp, #20]
     add     fp, sp, #20
 
-    mov     r5, r0              // store pin number in r5
-    mov     r6, r1              // store pin function in r2
-
-    bl      mapMem
     mov     r4, r0
+    mov     r5, r1              // store pin number in r5
+    mov     r6, r2              // store pin function in r2
 
 // Compute GPFSEL register address
     mov     r3, #10             // divisor 10 registers in each GPFSEL
@@ -59,9 +57,6 @@ gpioSelect:
     lsl     r6, r6, r1
     orr     r2, r2, r6
     str     r2, [r0, #0]
-
-    mov     r4, r0
-    bl      unmapMem
 
     mov     r0, #0
     ldr     r4, [sp, #4]
