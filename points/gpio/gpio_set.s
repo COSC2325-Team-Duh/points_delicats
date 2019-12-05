@@ -31,22 +31,23 @@ gpioSet:
                                     // (for the example math)
     mov     r5, r1                  // pin number = 34
 
-    add     r4, r0, GPSET0          // pointer to GPSET regs
+    add     r4, r0, GPSET0          // r4 = 0x1c <--offset for *GPSETn regs
 
 // compute addres of GPSET register and pin field
     mov     r3, PINS_IN_REG         // r3 = 32
-    udiv    r0, r5, r3              // GPSET number r0 = r5 / r3 = 1
+    udiv    r0, r5, r3              // *GPSETn r0 = r5 / r3 = 1
+
     mul     r1, r0, r3              // r1 = r0 * r3 = 32
     sub     r1, r5, r1              // r1 = r5 - r1 = 2
 
-    lsl     r0, r0, 2               // r0 = r0 << 2 = 0x04
-    add     r0, r0, r4              // r0 = r0 + GPSET = 0x20 (GPSET1)
+    lsl     r0, r0, #2              // r0 = r0 << 2 = 0x04
+    add     r0, r0, r4              // r0 = r0 + *GPSET = 0x20 (*GPSET1)
 
-    ldr     r2, [r0]                // r2 = *GPSET
+    ldr     r2, [r0]                // r2 = *GPSET1
     mov     r3, PIN                 // r3 = 1
     lsl     r3, r3, r1              // r3 = r3 << r1 = 0x00020000
     orr     r2, r2, r3              // r2 = r2 | r3 (write the pin)
-    str     r2, [r0]                // *GPSET = r2
+    str     r2, [r0]                // GPSET1 = r2
 
     mov     r0, #0                  // return 0
     ldr     r4, [sp, #0]            // restore the stack

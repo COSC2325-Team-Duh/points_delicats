@@ -2,15 +2,15 @@ import logging
 from .letters import letters
 from pin_write import pin_write
 from set_pin_mode import set_pin_mode
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 from time import sleep
 
-GPIO.setmode(GPIO.BCM)    # Number GPIOs by its physical location
+#GPIO.setmode(GPIO.BCM)    # Number GPIOs by its physical location
 latch_pin = 27
 clock_pin = 22
 data_pin  = 17
 
-GPIO.setup(data_pin, GPIO.OUT)
+#GPIO.setup(data_pin, GPIO.OUT)
 
 
 def sixToBraille(word):
@@ -97,21 +97,20 @@ def sendDisplay(matrix):
         shiftDisplay(brow)
         shiftDisplay(~column)
         pin_write(latch_pin, 1)
-        column>>=1
+        column>>=0x1
 
 
 def shiftDisplay(row):
     for j in range(8):
         pin_write(clock_pin, 0)
         if 0x01 & (row>>j) == 0x01:
-            pin_write(data_pin, 1)
+            pin_write(data_pin, 0b1)
             #GPIO.output(data_pin, 1)
         else:
-            pin_write(data_pin, 0)
+            pin_write(data_pin, 0b0)
             #GPIO.output(data_pin, 0)
-        sleep(1e-5)
         pin_write(clock_pin, 1)
-
+        sleep(1e-5)
 
 def clearDisplay():
     matrix = sixToBraille('')

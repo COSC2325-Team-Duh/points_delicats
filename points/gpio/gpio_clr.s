@@ -13,7 +13,7 @@
 // Constants
     .equ    PIN, 1
     .equ    PINS_IN_REG, 32
-    .equ    GPSET0, 0x28            // set register offset
+    .equ    GPCLR0, 0x28            // set register offset
 
 .text
 .align 2
@@ -31,15 +31,16 @@ gpioClr:
 
     mov     r5, r1
                                     // works the same as gpio_set.s
-    add     r4, r0, GPSET0          // see that file for details
+    add     r4, r0, GPCLR0          // see that file for details
 
 // compute addres of GPSET register and pin field
     mov     r3, PINS_IN_REG
     udiv    r0, r5, r3              //GPSET number
+
     mul     r1, r0, r3              // computer remained
     sub     r1, r5, r1
 
-    lsl     r0, r0, 2
+    lsl     r0, r0, #2
     add     r0, r0, r4
 
     ldr     r2, [r0]
