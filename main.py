@@ -1,11 +1,11 @@
 # set up logging library
 import logging
-logging.basicConfig(format='%(asctime)s .:%(levelname)s %(message)s', level=logging.DEBUG)
-
 import points as p
 from time import sleep
 
 TIME = 1000
+logging.basicConfig(format='%(asctime)s .:%(levelname)s %(message)s', level=logging.DEBUG)
+
 
 def setup():
     p.setup_pins()
@@ -13,11 +13,6 @@ def setup():
     p.set_pin_mode(p.clock_pin, 1)
     p.set_pin_mode(p.data_pin, 1)
 
-def sendDisplay(row):
-    for i in range(8):
-        GPIO.output(cPin, GPIO.LOW)
-        GPIO.output(dPin, (0x01&(row>>i)==0x01) and GPIO.HIGH or GPIO.LOW)
-        GPIO.output(cPin, GPIO.HIGH)
 
 def main():
     logging.info("Enter a phrase! -1 will exit the program")
@@ -56,6 +51,7 @@ def main():
         phrase = input("Phrase: ")
     logging.info("Goodbye!")
     return 0
+
 
 if __name__ == "__main__":
     try:
