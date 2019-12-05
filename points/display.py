@@ -1,16 +1,15 @@
 import logging
 from .letters import letters
 from pin_write import pin_write
-from set_pin_mode import set_pin_mode
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from time import sleep
 
-#GPIO.setmode(GPIO.BCM)    # Number GPIOs by its physical location
+GPIO.setmode(GPIO.BCM)    # Number GPIOs by its physical location
 latch_pin = 27
 clock_pin = 22
 data_pin  = 17
 
-#GPIO.setup(data_pin, GPIO.OUT)
+GPIO.setup(data_pin, GPIO.OUT)
 
 
 def sixToBraille(word):
@@ -64,7 +63,7 @@ def sixer(phrase):
     """
     output = [] # Output list of strings
 
-    parts = len(phrase)/6 # Number of parts in the output list. Used for loops
+    parts = len(phrase)//6 # Number of parts in the output list. Used for loops
     if (parts % 6  != 0 ): # If the number of characters in phrase doesn't divide by 6, add an extra index for those bits on the end
         parts = int(parts) + 1
 
@@ -89,10 +88,12 @@ def sendDisplay(matrix):
     """
     column = 0x80
     for row in matrix:
+        # convert row list of stringsto integer
         brow = 0b0
         for bit in row:
             brow = brow << 1
             brow = brow | int(bit)
+
         pin_write(latch_pin, 0)
         shiftDisplay(brow)
         shiftDisplay(~column)
@@ -104,11 +105,11 @@ def shiftDisplay(row):
     for j in range(8):
         pin_write(clock_pin, 0)
         if 0x01 & (row>>j) == 0x01:
-            pin_write(data_pin, 0b1)
-            #GPIO.output(data_pin, 1)
+            #pin_write(data_pin, 1)
+            GPIO.output(data_pin, 1)
         else:
-            pin_write(data_pin, 0b0)
-            #GPIO.output(data_pin, 0)
+            #pin_write(data_pin, 0)
+            GPIO.output(data_pin, 0)
         pin_write(clock_pin, 1)
         sleep(1e-5)
 
