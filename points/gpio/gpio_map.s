@@ -33,11 +33,17 @@
     .equ    STACK_ARGS, 8   //stack 8-byte aligned
 
 .data
+.align 2
 device:
     .asciz  "/dev/gpiomem"
+fdMsg:
+    .asciz  "File descriptor = %i\n"
+memMsg:
+    .asciz  "Using memory at %p\n"
 
 // main program
 .text
+.align 2
 .global mapMem
 .type   mapMem, %function
 
@@ -67,6 +73,8 @@ mapMem:             // RETURN GPIO ADDRESS as r0
     bl  mmap
     mov r5, r0                  // save virtual mem address
 
+@ END OF MEMORY MAPPIN, DAWG
+
 // restore stack
     mov r0, r5
     add sp, sp, STACK_ARGS
@@ -77,6 +85,10 @@ mapMem:             // RETURN GPIO ADDRESS as r0
     add sp, sp, #16
     bx lr
 
+.align 2
+fdMsgAddr:  .word   fdMsg
 deviceAddr: .word   device
 openMode:   .word   O_FLAGS
+memMsgAddr: .word   memMsg
 gpio:       .word   PERIPH+GPIO_OFFSET
+delayMS:    .int    1000

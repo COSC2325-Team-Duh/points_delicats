@@ -1,6 +1,15 @@
 import logging
 from .letters import letters
+from pin_write import pin_write
+from set_pin_mode import set_pin_mode
+import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BOARD)    # Number GPIOs by its physical location
+clock_pin = 22
+data_pin  = 17
+
+dPin = 11
+GPIO.setup(dPin, GPIO.OUT)
 def sixToBraille(word):
     """
     Takes a word (6 characters max) and converts it to the output array
@@ -51,10 +60,10 @@ def sixer(phrase):
     :return list: list of 6 character strings
     """
     output = [] # Output list of strings
-    
+
     parts = len(phrase)/6 # Number of parts in the output list. Used for loops
     if (parts % 6  != 0 ): # If the number of characters in phrase doesn't divide by 6, add an extra index for those bits on the end
-        parts = int(parts) + 1   
+        parts = int(parts) + 1
 
     for space in range(len(phrase)%6): #Adds spaces to the phrase to fill empty cells
         phrase = phrase + ' '
@@ -69,10 +78,21 @@ def sixer(phrase):
 
 # END OF sixer #
 
-def sendDisplay(rows):
+def sendDisplay(row):
     """
     Sends the rows to the binary file to be displayed on the 8x8 matrix.
 
-    :param rows: multimensional list of bytes
+    :param row: multimensional list of bytes
     :return none:
     """
+    for i in range(8):
+        pin_write(clock_pin, 0)
+        val = 0
+        if 0x01 & (row>>i) == 0x01:
+            #pin_write(data_pin, 1)
+            GPIO.output(dPin, 1)
+        else:
+            #pin_write(data_pin, 0)
+            GPIO.output(dPin, 0)
+        pin_write(clock_pin, 1)
+

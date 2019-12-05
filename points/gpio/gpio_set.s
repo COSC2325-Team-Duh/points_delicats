@@ -16,11 +16,12 @@
     .equ    GPSET0, 0x1c            // set register offset
 
 .text
+.align 2
 .global gpioSet
 .type gpioSet, %function
 
 gpioSet:
-    sub     sp, sp, #20
+    sub     sp, sp, #24
     str     r4, [sp, #0]
     str     r5, [sp, #4]
     str     r6, [sp, #8]
@@ -59,5 +60,5 @@ gpioSet:
     ldr     fp, [sp, #12]
     ldr     lr, [sp, #16]
 
-    add     sp, sp, #20
+    add     sp, sp, #24
     bx      lr

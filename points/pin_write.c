@@ -7,7 +7,7 @@ static PyObject *method_pin_write(PyObject *self, PyObject *args) {
     extern void gpioClr(int*);
 
     if (!PyArg_ParseTuple(args, "ii", &pin, &value)) {
-        return Py_False;
+        Py_INCREF(Py_None);
     }
     if (value == 1) {
         gpioSet(pin);
@@ -15,7 +15,7 @@ static PyObject *method_pin_write(PyObject *self, PyObject *args) {
     else if (value == 0) {
         gpioClr(pin);
     }
-
+    Py_INCREF(Py_None);
     return Py_None;
 }
 
@@ -28,7 +28,7 @@ static struct PyModuleDef pin_writemodule = {
     PyModuleDef_HEAD_INIT,
     "pin_write",
     "Writes to GPIO pin",
-    -1,
+    0,
     Pin_WriteMethods,
 };
 

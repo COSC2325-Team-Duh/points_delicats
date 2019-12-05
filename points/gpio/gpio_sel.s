@@ -18,6 +18,7 @@
     .equ PIN_FIELD, 0b111 // 3 bits!
 
 .text
+.align 2
 .global gpioSelect
 .type gpioSelect, %function
 

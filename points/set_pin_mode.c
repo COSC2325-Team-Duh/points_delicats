@@ -6,11 +6,12 @@ static PyObject *method_set_pin_mode(PyObject *self, PyObject *args) {
     extern void gpioSelect(int*, int*);
 
     if (!PyArg_ParseTuple(args, "ii", &pin, &mode)) {
-
+        Py_INCREF(Py_None);
         return Py_None;
     }
     gpioSelect(pin, mode);
 
+    Py_INCREF(Py_None);
     return Py_None;
 };
 
@@ -23,7 +24,7 @@ static struct PyModuleDef set_pin_modemodule = {
     PyModuleDef_HEAD_INIT,
     "set_pin_mode",
     "Assembly GPIO Interface",
-    -1,
+    0,
     Set_Pin_ModeMethods,
 };
 
