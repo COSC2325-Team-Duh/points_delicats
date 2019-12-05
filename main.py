@@ -3,13 +3,9 @@ import logging
 import points as p
 from time import sleep
 
-<<<<<<< HEAD
-TIME = 1000
 logging.basicConfig(format='%(asctime)s .:%(levelname)s %(message)s', level=logging.DEBUG)
 
-=======
 TIME = 200
->>>>>>> 49767d82974e2c4a367b9a7511a3b2debb9330c9
 
 def setup():
     p.setup_pins()
